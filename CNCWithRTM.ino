@@ -1,29 +1,32 @@
+#include "Pref.h"
+#include "Boot.h"
+#include "Parseandinterpret.h"
 
-volatile int i;
-volatile float input_line[4][6]; 
 void setup() {
 cli();
 TCCR1A = 0;
 TCCR1B = 0;
 TCNT1 = 0;
-OCR1A = 15600;
+OCR1A = 1000;
 TCCR1B |= (1<<CS12) | (0<<CS11) | (1<<CS10);
 TCCR1B |= (1<<WGM12);
 TIMSK1 |= (1<<OCIE1A);
 sei();
-Serial.begin(9600);
-delay(200);
+Serial.begin(Baudrate);
+Boot();
+}
+
+void loop() {
+  delay(200);
   char line[ LINE_BUFFER_LENGTH ];
   char c;
   int lineIndex;
   bool lineIsComment, lineSemiColon;
-Serial.println("New_LINE");
   lineIndex = 0;
   lineSemiColon = false;
   lineIsComment = false;
-}
+  while(1){
 
-void loop() {
 while ( Serial.available() > 0 ) {
 
       c = Serial.read();
@@ -34,7 +37,7 @@ while ( Serial.available() > 0 ) {
             Serial.print( "Received : ");
             Serial.println( line );
           }
-//          processIncomingLine( line, lineIndex );
+         processIncomingLine( line, lineIndex );
 
           lineIndex = 0;
         }
@@ -43,6 +46,7 @@ while ( Serial.available() > 0 ) {
         }
         lineIsComment = false;
         lineSemiColon = false;
+        delay(500);
         Serial.println("ok");
 
       }
@@ -51,7 +55,7 @@ while ( Serial.available() > 0 ) {
           if ( c == ')' )  lineIsComment = false;     // End of comment. Resume line.
         }
         else {
-          if ( c <= ' ' ) {                           // Throw away whitepace and control characters
+          if ( c <= ' ' ) {                           // Throw away whitespace and control characters
           }
           else if ( c == '/' ) {                    // Block delete not supported. Ignore character.
           }
@@ -74,13 +78,14 @@ while ( Serial.available() > 0 ) {
           }
         }
       }
-//    }
+   }
+}
 }
 ISR(TIMER1_COMPA_vect){
-  Serial.println('0x13');
+//  Serial.println('0x13');
   i++;
   Serial.println(i);
-  Serial.println('0x11');
+//  Serial.println('0x11');
   
 }
 
