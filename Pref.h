@@ -47,10 +47,12 @@ const int eny = 9;
 const int enz = 13;
 #define Baudrate 115200
 #define Enableall 1
-const int StepsRevo = 200;
+#define StepsRevo = 200;
 #define Spindel 6
 #define LINE_BUFFER_LENGTH 512
  #define rampup
 //all what is needed for interupts here:
+#define OVERFLOW_INTER 100
+
 volatile unsigned long i;
 volatile float input_line[4][6]; 

@@ -1,5 +1,8 @@
 /*>In this File we are parsing the String we have received in the loop function */
 #include "G_commands.h"
+#include "M_commands.h"
+#include "Speed.h"
+#include "Buffer.h"
 void processIncomingLine( char* line, int charNB ) {
   struct point G91;
   G91.x = 0;
@@ -163,7 +166,11 @@ void processIncomingLine( char* line, int charNB ) {
   
   if (Gactivation == 0) {
   } Gactivation = 0;
-  Serial.println(1);
+  
+  CircleBuffer(dx,dy,dz,Feedrate1);
+  
+  
+  
   //    if (llm == 1) {
   //      digitalWrite(8, 1);
   //      digitalWrite(9, 1);

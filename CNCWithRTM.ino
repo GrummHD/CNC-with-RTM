@@ -7,7 +7,7 @@ cli();
 TCCR1A = 0;
 TCCR1B = 0;
 TCNT1 = 0;
-OCR1A = 1000;
+OCR1A = OVERFLOW_INTER;
 TCCR1B |= (1<<CS12) | (0<<CS11) | (1<<CS10);
 TCCR1B |= (1<<WGM12);
 TIMSK1 |= (1<<OCIE1A);
@@ -46,8 +46,10 @@ while ( Serial.available() > 0 ) {
         }
         lineIsComment = false;
         lineSemiColon = false;
-        delay(500);
+cli();
         Serial.println("ok");
+          Serial.println(i);
+        sei();
 
       }
       else {
@@ -82,10 +84,9 @@ while ( Serial.available() > 0 ) {
 }
 }
 ISR(TIMER1_COMPA_vect){
-//  Serial.println('0x13');
+
   i++;
-  Serial.println(i);
-//  Serial.println('0x11');
+  
   
 }
 
