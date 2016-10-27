@@ -53,6 +53,9 @@ const int enz = 13;
  #define rampup
 //all what is needed for interupts here:
 #define OVERFLOW_INTER 100
-
+#define CBufflength 6
 volatile unsigned long i;
-volatile float input_line[4][6]; 
+volatile float input_line[4][CBufflength]; 
+//Buffer 
+  int Write_PointerY;
+

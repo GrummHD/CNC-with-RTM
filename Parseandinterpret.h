@@ -53,7 +53,9 @@ void processIncomingLine( char* line, int charNB ) {
   float dx = actuatorPos.x - newPos.x;
   float dy = actuatorPos.y - newPos.y;
   float dz = actuatorPos.z - newPos.z;
-
+  dx = abs(dx* stepsperMillimeterX);
+  dy = abs(dy* stepsperMillimeterY);
+  dz = abs(dz* stepsperMillimeterZ);
   while ( currentIndex < charNB ) {
 
     switch ( line[ currentIndex++ ] ) {              // Select command, if any
@@ -90,8 +92,7 @@ void processIncomingLine( char* line, int charNB ) {
                 Serial.println(G91.x);
                 Serial.println(newPos.y);
                 Serial.println(newPos.z);
-/*                 drawLine(newPos.x, newPos.y, newPos.z);
- */                actuatorPos.x = actuatorPos.x + newPos.x;
+                           actuatorPos.x = actuatorPos.x + newPos.x;
                 actuatorPos.y = actuatorPos.y + newPos.y;
                 actuatorPos.z = actuatorPos.z + newPos.z;
                 Feedrate1 = Feedrate;
@@ -135,7 +136,7 @@ void processIncomingLine( char* line, int charNB ) {
                 break;
               }
             case 03:
-              { Serial.println("on");  //neue Commands hier einfügen
+              { Serial.println("on");  //neue Commands hier einfï¿½gen
                 delay(2000);
                 break;
               }
@@ -163,14 +164,14 @@ void processIncomingLine( char* line, int charNB ) {
   //
   //    }
 
-  
+
   if (Gactivation == 0) {
   } Gactivation = 0;
-  
-  CircleBuffer(dx,dy,dz,Feedrate1);
-  
-  
-  
+
+  CircleBuffer(dx, dy, dz, Feedrate1);
+
+
+
   //    if (llm == 1) {
   //      digitalWrite(8, 1);
   //      digitalWrite(9, 1);
