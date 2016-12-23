@@ -1,8 +1,5 @@
 /*>In this File we are parsing the String we have received in the loop function */
-#include "G_commands.h"
-#include "M_commands.h"
-#include "Speed.h"
-#include "Buffer.h"
+#include "CalcMovements.h"
 void processIncomingLine( char* line, int charNB ) {
   struct point G91;
   G91.x = 0;
@@ -70,12 +67,12 @@ void processIncomingLine( char* line, int charNB ) {
           switch ( atoi( buffer ) ) { //selectG command
             case 02: break;
             case 00:
-              { Feedrate1 = feedrate(Eilgang);
+              { Feedrate1 = Feedrate;
 
                 break;
               }
             case 01:
-              { Feedrate1 = feedrate(Feedrate);
+              { Feedrate1 = Feedrate;
 
                 break;
               case 91:
@@ -165,10 +162,8 @@ void processIncomingLine( char* line, int charNB ) {
   //    }
 
 
-  if (Gactivation == 0) {
-  } Gactivation = 0;
+  CalcMovements(dx,dy,dz,Feedrate1);
 
-  CircleBuffer(dx, dy, dz, Feedrate1);
 
 
 
